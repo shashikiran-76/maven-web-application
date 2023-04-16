@@ -1,0 +1,33 @@
+node{
+
+
+
+
+ echo " the job name is: ${env.JOB_NAME} "
+echo " the biuld number is ${env.BUILD_NUMBER} "
+echo " the node name is ${env.NODE_NAME} "
+echo " the node label will be the ${env.NODE_LABELS} "  
+    
+    
+    
+    
+    
+
+properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '5', numToKeepStr: '5')), pipelineTriggers([pollSCM('* * * * * ')])])
+
+def mavenHome = tool name: "maven 3.9.0"
+
+stage('CheckoutCode'){
+git credentialsId: '4ed2921b-b797-436d-923f-856e64e3bb11', url: 'https://github.com/shashikiran-76/maven-web-application.git'
+
+}
+stage('Build'){
+sh "${mavenHome}/bin/mvn clean package"
+}
+stage('deploy application in to tomacat'){
+sshagent(['4212241d-4880-40b2-8948-e396da44da31']) {
+    // some block
+sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@52.66.7.7:/opt/apache-tomcat-9.0.73/webapps" 
+}
+}
+}
