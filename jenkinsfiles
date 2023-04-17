@@ -24,12 +24,6 @@ git credentialsId: '4ed2921b-b797-436d-923f-856e64e3bb11', url: 'https://github.
 stage('Build'){
 sh "${mavenHome}/bin/mvn clean package"
 }
-stage('ExecuteSonarQubeReport'){
-sh "${mavenHome}/bin/mvn sonar:sonar"
-}
-stage('UploadArtifactsIntoNexus'){
-sh "${mavenHome}/bin/mvn deploy"
-}
 
 stage('deploy application in to tomacat'){
 sshagent(['4212241d-4880-40b2-8948-e396da44da31']) {
