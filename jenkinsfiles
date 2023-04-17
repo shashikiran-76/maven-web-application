@@ -37,11 +37,11 @@ catch (e) {
     currentBuild.result = "FAILED"
 }//catch block closing
 finally{
-notifyBuild(currentBuild.result)
+sendslacknotification(currentBuild.result)
 }
 }
 
-def notifyBuild(String buildStatus = 'STARTED') {
+def sendslacknotification(String buildStatus = 'STARTED') {
   // build status of null means successful
   buildStatus =  buildStatus ?: 'SUCCESSFUL'
 
@@ -66,4 +66,4 @@ def notifyBuild(String buildStatus = 'STARTED') {
   // Send notifications
   slackSend (color: colorCode, message: summary)
 }
-}
+
