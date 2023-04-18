@@ -15,7 +15,7 @@ echo " the node label will be the ${env.NODE_LABELS} "
 
 properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '5', numToKeepStr: '5')), pipelineTriggers([pollSCM('* * * * * ')])])
 
-def mavenHome = tool name: "maven 3.9.0"
+def mavenHome = tool name: "Maven 3.9.0"
 try{
 stage('CheckoutCode'){
 git credentialsId: '4ed2921b-b797-436d-923f-856e64e3bb11', url: 'https://github.com/shashikiran-76/maven-web-application.git'
